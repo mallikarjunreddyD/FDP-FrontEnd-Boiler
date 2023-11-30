@@ -54,7 +54,7 @@ export const ContractComponent = () => {
   useEffect(() => {
     async function loadContract() {
       if (provider) {
-        const contractAddress = '0x373Fb7e38855066bFda4C002eD366F2A1cB7BbB0'; // Replace with your contract address
+        const contractAddress = '0xD5B3DA5D0033165c12A07cf4c13C1A107187aB14'; // Replace with your contract address
         const deployedContract = new ethers.Contract(contractAddress, FDPDAPPABI, provider);
         setContract(deployedContract);
       }
