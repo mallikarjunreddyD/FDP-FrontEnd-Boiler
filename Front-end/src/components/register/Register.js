@@ -1,39 +1,41 @@
 import React, { useState, useContext } from 'react';
 import { TextField, Button, Box } from '@mui/material';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { registerUser } from '../../services/ApiService';
+import {MetaMaskComponent} from '../../helpers/EthereumHelper';
+import {ContractComponent} from '../../helpers/EthereumHelper';
 
-
-const Register = () =>{
-    const navigate = useNavigate();
-    const location = useLocation();
-    const address = location.state?.address || '';
-  
-    const [name, affliation] = useState('');
+const Register = ({}) =>{
+    let currentAccount = MetaMaskComponent()
+    let contract =  ContractComponent()
+    const [name, setName] = useState('');
+    const [affliation,setAffliation] = useState('')    
     const register = async (event) => {
-        event.preventDefault();
-        try {
-          const response = await registerUser({  });
+    event.preventDefault();
+        try {         
+          console.log(await contract.organiser())
         } catch (error) {
           console.error('Failed to register user:', error);
         }
     };
-    return(
-        <Box
-        component="form"
-        onSubmit={register}
-        display="flex"
-        flexDirection="column"
-        alignItems="center"
-        justifyContent="center"
-        height="100vh" // Full height of the viewport
-      >
+    return(      
+      <Box
+      component="form"
+      onSubmit={register}
+      display="flex"
+      flexDirection="column"
+      alignItems="center"
+      justifyContent="center"
+      height="100vh" // Full height of the viewport
+      >    
+      
          <TextField
                   type="text"
+                  required
                   className="form-control"
                   id="name"
                   aria-describedby="mintHelp"
                   placeholder="Name"
+                  value = {name}
+                  onChange={(e)=>setName(e.target.value)}
                 /> 
          <TextField
                   type="text"
@@ -41,7 +43,8 @@ const Register = () =>{
                   id="affiliation"
                   aria-describedby="mintHelp"
                   placeholder="Affiliation"
-    
+                  value = {affliation}
+                  onChange={(e)=>setAffliation(e.target.value)}
                 />
          <Button 
         type="submit" 

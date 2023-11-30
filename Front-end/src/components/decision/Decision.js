@@ -1,9 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { TextField, Button, Box } from '@mui/material';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { decideUser } from '../../services/ApiService';
-
-
 const Decision = () =>{
     const navigate = useNavigate();
     const location = useLocation();
@@ -13,7 +10,7 @@ const Decision = () =>{
     const decision = async (event) => {
         event.preventDefault();
         try {
-          const response = await decideUser({  });
+          
         } catch (error) {
           console.error('Failed to decide:', error);
         }

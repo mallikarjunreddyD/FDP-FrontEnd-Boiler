@@ -1,8 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { TextField, Button, Box } from '@mui/material';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { getNFTsList } from '../../services/ApiService';
-
 
 const Certificates = () =>{
     const navigate = useNavigate();
@@ -12,7 +10,7 @@ const Certificates = () =>{
     const certificate = async (event) => {
         event.preventDefault();
         try {
-          const response = await getNFTsList({  });
+          //const response = await getNFTsList({  });
         } catch (error) {
           console.error('Failed to redeemTokens:', error);
         }

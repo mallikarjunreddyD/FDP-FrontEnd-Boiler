@@ -1,33 +1,38 @@
-import React,{useContext} from 'react';
-import Button from '@mui/material/Button';
-import { json, useNavigate } from 'react-router-dom';
-import { connectToMetamask } from '../../helpers/EthereumHelper';
-import Box from '@mui/material/Box';
-import { getUser } from '../../services/ApiService';
-import { UserContext } from '../../contexts/UserContext';
+import React, { useState, useEffect } from 'react';
 
-const Connect = () => {
-  const navigate = useNavigate();
-  const  setAddress  = useContext(UserContext); // Get setAddress from context
+function MetaMaskComponent() {
+  const [currentAccount, setCurrentAccount] = useState('');
+  useEffect(() => {
+    const checkMetaMask = async () => {
+      // Check if MetaMask is installed
+      if (window.ethereum) {
+        // Detect account changes
+        window.ethereum.on('accountsChanged', (accounts) => {
+          if (accounts.length > 0) {
+            setCurrentAccount(accounts[0]);
+          } else {
+            setCurrentAccount('');
+          }
+        });
+        // Fetch the current account on component mount
+        const accounts = await window.ethereum.request({ method: 'eth_accounts' });
+        if (accounts.length > 0) {
+          setCurrentAccount(accounts[0]);
+        }
+      } else {
+        console.log('MetaMask not found');
+      }
+    };
 
-  const connect = async () => {
-  const signer = await connectToMetamask();
-    if (signer) {
-      const address = await signer.getAddress();
-      console.log(address)
-    }
-  };
+    checkMetaMask();
+  }, []);
 
   return (
-    <Box
-      display="flex"
-      justifyContent="center"
-      alignItems="center"
-      height="100vh" // Full height of the viewport
-    >
-      <Button variant="contained" color="primary" onClick={connect}>Login with Metamask</Button>
-    </Box>
+    <div>
+      <h1>MetaMask Component</h1>
+      <p>Current Ethereum Address: {currentAccount || 'Not connected'}</p>
+    </div>
   );
-};
+}
 
-export default Connect;
+export default MetaMaskComponent;

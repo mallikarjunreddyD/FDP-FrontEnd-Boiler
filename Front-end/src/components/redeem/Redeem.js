@@ -1,8 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { TextField, Button, Box } from '@mui/material';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { redeemTokens } from '../../services/ApiService';
-
 
 const Redeem = () =>{
     const navigate = useNavigate();
@@ -12,7 +10,7 @@ const Redeem = () =>{
     const redeem = async (event) => {
         event.preventDefault();
         try {
-          const response = await redeemTokens({  });
+         
         } catch (error) {
           console.error('Failed to redeemTokens:', error);
         }
