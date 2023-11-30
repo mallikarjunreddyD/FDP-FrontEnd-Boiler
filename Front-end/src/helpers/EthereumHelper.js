@@ -35,13 +35,15 @@ import { ethers } from 'ethers';
 export const ContractComponent = () => {
     const [provider, setProvider] = useState(null);
     const [contract, setContract] = useState(null);
-
   useEffect(() => {
     async function initEthers() {
       if (window.ethereum) {
+        await window.ethereum.request({ method: 'eth_accounts' });
         const ethProvider = new ethers.providers.Web3Provider(window.ethereum);
         await window.ethereum.enable();
         setProvider(ethProvider);
+        console.log(ethProvider.getSigner())
+
       } else {
         console.log('MetaMask not found');
       }
@@ -59,7 +61,7 @@ export const ContractComponent = () => {
     }
     loadContract();
   }, [provider]);
-  return contract;
+  return [contract,provider];
 }
 
 
